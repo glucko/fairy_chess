@@ -1,4 +1,4 @@
-from tile import Tile
+from .tile import Tile
 
 class Grid():
     def __init__(self, width, height, tiles=None):
@@ -9,7 +9,7 @@ class Grid():
         else:
             self.tiles = tiles
     
-    def add_pieces(self, tiles):
+    def add_pieces(self, new_tiles):
         for tile in new_tiles:
             self.tiles[tile.x][tile.y] = tile
     

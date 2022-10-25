@@ -1,9 +1,9 @@
 import pygame
 import sys
 
-from grid import Grid
+from util.grid import Grid
+from util.tile import Tile
 from pieces.piece import Piece
-from tile import Tile
 
 BLACK = (0, 0, 0)
 WHITE = (200, 200, 200)
@@ -43,6 +43,7 @@ def init_grid():
     for x in range(8):
         tiles.append(Tile(x, 0, Piece(grid, "black", (x, 0))))
         tiles.append(Tile(x, 7, Piece(grid, "white", (x, 7))))
+    grid.add_pieces(tiles)
     return grid
 
 def draw_grid():
