@@ -1,8 +1,17 @@
+from tile import Tile
+
 class Grid():
-    def __init__(self, tiles):
+    def __init__(self, width, height, tiles=None):
         self.width = width
         self.height = height
-        self.tiles = tiles
+        if tiles is None:
+            self.tiles = [[Tile(x, y) for y in range(height)] for x in range(width)]
+        else:
+            self.tiles = tiles
+    
+    def add_pieces(self, tiles):
+        for tile in new_tiles:
+            self.tiles[tile.x][tile.y] = tile
     
     def move_piece(self, piece, new_tile):
         if piece.is_valid_move(new_tile.x. new_tile.y):

@@ -1,6 +1,10 @@
 import pygame
 import sys
 
+from grid import Grid
+from pieces.piece import Piece
+from tile import Tile
+
 BLACK = (0, 0, 0)
 WHITE = (200, 200, 200)
 WINDOW_HEIGHT = 400
@@ -13,18 +17,35 @@ def main():
     SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     CLOCK = pygame.time.Clock()
     SCREEN.fill(BLACK)
+    draw_grid()
+    grid = init_grid()
 
     while True:
-        drawGrid()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+        render_pieces(grid)
 
         pygame.display.update()
 
+def render_pieces(grid):
+    tile_size = WINDOW_HEIGHT // 8
+    for i in grid.tiles:
+        for j in i:
+            if j.piece:
+                piece = j.piece
+                SCREEN.blit(piece.image, piece.rect)
 
-def drawGrid():
+def init_grid():
+    tiles = []
+    grid = Grid(8, 8)
+    for x in range(8):
+        tiles.append(Tile(x, 0, Piece(grid, "black", (x, 0))))
+        tiles.append(Tile(x, 7, Piece(grid, "white", (x, 7))))
+    return grid
+
+def draw_grid():
     blockSize = WINDOW_HEIGHT // 8
     for x in range(0, 8):
         for y in range(0, 8):
