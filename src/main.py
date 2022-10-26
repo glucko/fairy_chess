@@ -5,8 +5,8 @@ from util.grid import Grid
 from util.tile import Tile
 from pieces.piece import Piece
 
-BLACK = (0, 0, 0)
-WHITE = (200, 200, 200)
+BLACK = (148,83,50)
+WHITE = (222,185,145)
 WINDOW_HEIGHT = 400
 WINDOW_WIDTH = 400
 
