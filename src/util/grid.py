@@ -8,7 +8,7 @@ class Grid():
             self.tiles = [[Tile(x, y) for y in range(height)] for x in range(width)]
         else:
             self.tiles = tiles
-    
+
     def add_pieces(self, new_tiles):
         for tile in new_tiles:
             self.tiles[tile.x][tile.y] = tile
@@ -21,5 +21,3 @@ class Grid():
             return True
         return False
     
-    def kill(self, piece):
-        piece.tile = (None, None, None)
