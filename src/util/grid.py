@@ -13,11 +13,10 @@ class Grid():
         for tile in new_tiles:
             self.tiles[tile.x][tile.y] = tile
     
-    def move_piece(self, piece, new_tile):
-        if piece.is_valid_move(new_tile.x. new_tile.y):
-            if new_tile.piece:
-                new_tile.piece.kill()
-            piece.tile = (x, y, piece)
+    def move_piece(self, old_tile, new_tile):
+        if old_tile.piece.is_valid_move(new_tile.x, new_tile.y):
+            new_tile.piece = old_tile.piece
+            old_tile.piece = None
             return True
         return False
     
