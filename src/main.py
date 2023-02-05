@@ -6,6 +6,7 @@ from util.tile import Tile
 from util.constants import *
 from pieces.piece import Piece
 from pieces.pawn import Pawn
+from pieces.rook import Rook
 
 
 def main():
@@ -57,6 +58,10 @@ def init_grid():
     for x in range(8):
         tiles.append(Tile(x, 1, Pawn("white")))
         tiles.append(Tile(x, 6, Pawn("black")))
+    tiles.append(Tile(0, 0, Rook("white", grid)))
+    tiles.append(Tile(7, 0, Rook("white", grid)))
+    tiles.append(Tile(0, 7, Rook("black", grid)))
+    tiles.append(Tile(7, 7, Rook("black", grid)))
     grid.add_pieces(tiles)
     return grid
 
