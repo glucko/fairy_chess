@@ -17,6 +17,8 @@ class Piece():
     def is_valid_move(self, current_tile, new_tile):
         if 7 < new_tile.x < 0 or 7 < new_tile.y < 0:
             return False
+        if new_tile.piece is not None and new_tile.piece.color == self.color:
+            return False
         if current_tile.x == new_tile.x and current_tile.y == new_tile.y:
             return False
         return True
