@@ -22,7 +22,6 @@ def main():
     selected_tile = None
     while True:
         hovered_tile = get_square_under_mouse(grid)
-        print(hovered_tile)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -33,8 +32,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONUP:
                 drop_tile = get_square_under_mouse(grid)
                 if drop_tile and selected_tile:
-                    grid.move_piece(selected_tile, drop_tile)
-                    selected_tile.piece = None
+                    print(grid.move_piece(selected_tile, drop_tile))
                 selected_piece = None
 
         draw_grid()

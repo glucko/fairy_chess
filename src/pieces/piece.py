@@ -12,7 +12,9 @@ class Piece():
         self.image = pygame.transform.smoothscale(self.image, (TILE_SIZE, TILE_SIZE))
         #self.image = pygame.Surface([40, 40])
     
-    def is_valid_move(self, x, y):
-        if x < 0 or y < 0:
+    def is_valid_move(self, current_tile, new_tile):
+        if 7 < new_tile.x < 0 or 7 < new_tile.y < 0:
+            return False
+        if current_tile.x == new_tile.x and current_tile.y == new_tile.y:
             return False
         return True
