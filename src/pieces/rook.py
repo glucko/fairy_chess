@@ -9,22 +9,17 @@ class Rook(Piece):
     def is_valid_move(self, current_tile, new_tile):
         if not super().is_valid_move(current_tile, new_tile):
             return False
+            
         if current_tile.x == new_tile.x:
-            back = 1
-            if current_tile.y > new_tile.y:
-                back = -1
+            back = -1 if current_tile.y > new_tile.y else 1
 
-            print(current_tile.y, new_tile.y, back)
             for i in range(current_tile.y+back, new_tile.y, back):
-                print(self.grid.tiles[current_tile.x][i])
                 if self.grid.tiles[current_tile.x][i].piece is not None:
                     return False
             return True
 
         elif current_tile.y == new_tile.y:
-            back = 1
-            if current_tile.x > new_tile.x:
-                back = -1
+            back = -1 if current_tile.x > new_tile.x else 1
 
             for i in range(current_tile.x+back, new_tile.x, back):
                 if self.grid.tiles[i][current_tile.y].piece is not None:

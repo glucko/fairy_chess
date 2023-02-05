@@ -8,7 +8,7 @@ from pieces.piece import Piece
 from pieces.pawn import Pawn
 from pieces.rook import Rook
 from pieces.king import King
-
+from pieces.bishop import Bishop
 
 def main():
     pygame.init()
@@ -66,6 +66,11 @@ def init_grid():
     tiles.append(Tile(0, 7, Rook("black", grid)))
     tiles.append(Tile(7, 7, Rook("black", grid)))
 
+    # adds bishops
+    tiles.append(Tile(2, 0, Bishop("white", grid)))
+    tiles.append(Tile(5, 0, Bishop("white", grid)))
+    tiles.append(Tile(2, 7, Bishop("black", grid)))
+    tiles.append(Tile(5, 7, Bishop("black", grid)))
     # adds kings
     tiles.append(Tile(4, 0, King("white", grid)))
     tiles.append(Tile(4, 7, King("black", grid)))
