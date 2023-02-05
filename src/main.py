@@ -5,8 +5,8 @@ from util.grid import Grid
 from util.tile import Tile
 from util.constants import *
 from pieces.piece import Piece
+from pieces.pawn import Pawn
 
-# TODO: change piece infrastructure, peices shouldnt need to know their coordinates
 
 def main():
     pygame.init()
@@ -55,8 +55,8 @@ def init_grid():
     tiles = []
     grid = Grid(8, 8)
     for x in range(8):
-        tiles.append(Tile(x, 0, Piece("black")))
-        tiles.append(Tile(x, 7, Piece("white")))
+        tiles.append(Tile(x, 1, Pawn("white")))
+        tiles.append(Tile(x, 6, Pawn("black")))
     grid.add_pieces(tiles)
     return grid
 

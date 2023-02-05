@@ -15,10 +15,11 @@ class Grid():
     
     def move_piece(self, current_tile, new_tile):
         if current_tile.piece is None:
-            return 0
+            return 0, "No piece on current tile"
         if current_tile.piece.is_valid_move(current_tile, new_tile):
             new_tile.piece = current_tile.piece
+            new_tile.piece.move_count += 1
             current_tile.piece = None
             return 1
-        return 0
+        return 0, "Invalid move"
     
