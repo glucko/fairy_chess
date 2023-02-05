@@ -2,7 +2,7 @@ import pygame
 from util.constants import TILE_SIZE
 class Piece():
     piece_type="pawn"
-    def __init__(self, color, type="pawn", move_count=0):
+    def __init__(self, color, move_count=0):
         self.color = color
         self.move_count = 0
 

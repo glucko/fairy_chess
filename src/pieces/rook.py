@@ -2,14 +2,18 @@ from pieces.piece import Piece
 class Rook(Piece):
     piece_type="rook"
 
-    def __init__(self, color, grid, type="rook", move_count=0):
-        super().__init__(color, type, move_count)
+    def __init__(self, color, grid, move_count=0):
+        super().__init__(color, move_count)
         self.grid = grid
 
     def is_valid_move(self, current_tile, new_tile):
-        if not super().is_valid_move(current_tile, new_tile):
+        # dear god
+        if not self.__class__.__bases__[0].is_valid_move(self, current_tile, new_tile):
             return False
+        # if not super().is_valid_move(current_tile, new_tile):
+        #     return False
             
+
         if current_tile.x == new_tile.x:
             back = -1 if current_tile.y > new_tile.y else 1
 
