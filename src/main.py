@@ -10,6 +10,7 @@ from pieces.rook import Rook
 from pieces.king import King
 from pieces.bishop import Bishop
 from pieces.queen import Queen
+from pieces.knight import Knight
 
 def main():
     pygame.init()
@@ -73,13 +74,20 @@ def init_grid():
     tiles.append(Tile(2, 7, Bishop("black", grid)))
     tiles.append(Tile(5, 7, Bishop("black", grid)))
 
+    # adds knights
+    tiles.append(Tile(1, 0, Knight("white", grid)))
+    tiles.append(Tile(6, 0, Knight("white", grid)))
+    tiles.append(Tile(1, 7, Knight("black", grid)))
+    tiles.append(Tile(6, 7, Knight("black", grid)))
+
     # adds queens
     tiles.append(Tile(3, 0, Queen("white", grid)))
     tiles.append(Tile(3, 7, Queen("black", grid)))
-    
+
     # adds kings
     tiles.append(Tile(4, 0, King("white", grid)))
     tiles.append(Tile(4, 7, King("black", grid)))
+    
     grid.add_pieces(tiles)
     return grid
 
