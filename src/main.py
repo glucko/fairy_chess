@@ -1,9 +1,9 @@
 import pygame
 import sys
 
-from util.grid import Grid
-from util.tile import Tile
-from util.constants import *
+from grid import Grid
+from tile import Tile
+from constants import *
 from pieces.piece import Piece
 from pieces.pawn import Pawn
 from pieces.rook import Rook
@@ -24,6 +24,7 @@ def main():
     grid = init_grid()
 
     selected_tile = None
+    turn = 'white'
     while True:
         hovered_tile = get_square_under_mouse(grid)
         for event in pygame.event.get():
@@ -31,12 +32,17 @@ def main():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if hovered_tile != None and hovered_tile.piece != None:
+                if hovered_tile != None and hovered_tile.piece != None and hovered_tile.piece.color == turn:
                     selected_tile = hovered_tile
             if event.type == pygame.MOUSEBUTTONUP:
                 drop_tile = get_square_under_mouse(grid)
                 if drop_tile and selected_tile:
-                    print(grid.move_piece(selected_tile, drop_tile))
+                    outcome = grid.move_piece(selected_tile, drop_tile)
+                    if outcome == 2:
+                        print(f"{turn} wins!")
+                    if outcome == 1:
+                        turn = 'black' if turn == 'white' else 'white'
+                    print(turn)
                 selected_piece = None
 
         draw_grid()

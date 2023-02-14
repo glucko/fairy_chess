@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pygame import Rect
-from .constants import TILE_SIZE
+from constants import TILE_SIZE
 @dataclass
 class Tile:
     x : int

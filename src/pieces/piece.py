@@ -1,5 +1,5 @@
 import pygame
-from util.constants import TILE_SIZE
+from constants import TILE_SIZE
 class Piece():
     piece_type="pawn"
     def __init__(self, color, move_count=0):
