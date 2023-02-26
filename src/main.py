@@ -28,14 +28,30 @@ def main():
 
     layout_rect = pygame_gui.elements.UIWindow(pygame.Rect(10, 10, 200, 560))
 
-    start_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((20, 5), (100, 50)),
-                                                text='Start',
-                                                manager=manager,
-                                                container=layout_rect)
-    stop_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((20, 5+50), (100, 50)),
-                                                text='Stop',
-                                                manager=manager,
-                                                container=layout_rect)
+    start_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((20, 5), (100, 50)),
+    text='Start',
+    manager=manager,
+    container=layout_rect)
+
+    stop_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((20, 5+50), (100, 50)),
+    text='Stop',
+    manager=manager,
+    container=layout_rect)
+
+    restart_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((20, 5+50), (100, 50)),
+    text='Restart',
+    manager=manager,
+    container=layout_rect)
+
+    turn_label = pygame_gui.elements.UILabel(
+    relative_rect=pygame.Rect((20, 5+50*3), (100, 50)),
+    text="Turn: White",
+    manager=manager,
+    container=layout_rect)
+
     grid = init_grid()
 
     app_running = True
@@ -58,6 +74,7 @@ def main():
                     run_game = True
                 if event.ui_element == stop_button:
                     run_game = False
+
             # !!!!!!!!! GAME EVENTS !!!!!!!!!
             if run_game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -71,6 +88,7 @@ def main():
                             print(f"{turn} wins!")
                         if outcome == 1:
                             turn = 'black' if turn == 'white' else 'white'
+                            turn_label.set_text(text=f"Turn: {turn}")
                         print(turn)
             manager.process_events(event)
 
