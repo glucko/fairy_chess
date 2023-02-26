@@ -13,6 +13,9 @@ from pieces.bishop import Bishop
 from pieces.queen import Queen
 from pieces.knight import Knight
 
+# TODO: add game timer, add timer for each player, extend screen so menu is not in way of game
+# TODO: add fairy chess pieces, custom pieces, custom baord custom board size
+# TODO: add no game screen, add win game screen
 def main():
     pygame.init()
 
