@@ -41,7 +41,7 @@ def main():
     container=layout_rect)
 
     restart_button = pygame_gui.elements.UIButton(
-    relative_rect=pygame.Rect((20, 5+50), (100, 50)),
+    relative_rect=pygame.Rect((20, 5+50*2), (100, 50)),
     text='Restart',
     manager=manager,
     container=layout_rect)
@@ -73,7 +73,12 @@ def main():
                 if event.ui_element == start_button:
                     run_game = True
                 if event.ui_element == stop_button:
-                    run_game = False
+                    run_game = True
+                if event.ui_element == restart_button:
+                    grid = init_grid()
+                    turn = 'white'
+                    turn_label.set_text(text=f"Turn: {turn}")
+                    run_game = True
 
             # !!!!!!!!! GAME EVENTS !!!!!!!!!
             if run_game:
