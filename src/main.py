@@ -1,5 +1,6 @@
 import pygame
 import sys
+import pygame_gui
 
 from grid import Grid
 from tile import Tile
@@ -17,42 +18,76 @@ def main():
 
     global SCREEN, CLOCK
     SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT))
     CLOCK = pygame.time.Clock()
 
     SCREEN.fill(BLACK)
 
+    background = pygame.Surface((800, 600))
+    background.fill(pygame.Color('#000000'))
+
+    layout_rect = pygame_gui.elements.UIWindow(pygame.Rect(10, 10, 200, 560))
+
+    start_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((20, 5), (100, 50)),
+                                                text='Start',
+                                                manager=manager,
+                                                container=layout_rect)
+    stop_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((20, 5+50), (100, 50)),
+                                                text='Stop',
+                                                manager=manager,
+                                                container=layout_rect)
     grid = init_grid()
+
+    app_running = True
+    run_game = False
 
     selected_tile = None
     turn = 'white'
-    while True:
+    while app_running:
+        SCREEN.blit(background, (0, 0))
+        time_delta = CLOCK.tick(60)/1000.0
         hovered_tile = get_square_under_mouse(grid)
+        selected_tile = None
+
+        # !!!!!!!!! EVENTS !!!!!!!!!
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if hovered_tile != None and hovered_tile.piece != None and hovered_tile.piece.color == turn:
-                    selected_tile = hovered_tile
-            if event.type == pygame.MOUSEBUTTONUP:
-                drop_tile = get_square_under_mouse(grid)
-                if drop_tile and selected_tile:
-                    outcome = grid.move_piece(selected_tile, drop_tile)
-                    if outcome == 2:
-                        print(f"{turn} wins!")
-                    if outcome == 1:
-                        turn = 'black' if turn == 'white' else 'white'
-                    print(turn)
-                selected_piece = None
+                app_running = False
+            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == start_button:
+                    run_game = True
+                if event.ui_element == stop_button:
+                    run_game = False
+            if run_game:
+                game_events(event, grid, hovered_tile, selected_tile, turn)
+            manager.process_events(event)
 
-        draw_grid()
-        render_pieces(grid)
+        if run_game: 
+            render_grid()
+            render_pieces(grid)
 
-        if hovered_tile != None:
-            rect = (BOARD_POS[0] + hovered_tile.x * TILE_SIZE, BOARD_POS[1] + hovered_tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-            pygame.draw.rect(SCREEN, (255, 0, 0, 50), rect, 2)
-
+            if hovered_tile != None:
+                rect = (BOARD_POS[0] + hovered_tile.x * TILE_SIZE, BOARD_POS[1] + hovered_tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+                pygame.draw.rect(SCREEN, (255, 0, 0, 50), rect, 2)
+                
+        manager.draw_ui(SCREEN)
+        manager.update(time_delta)
         pygame.display.flip()
+
+def game_events(event, grid, hovered_tile, selected_tile, turn):
+    print("sussy")
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if hovered_tile != None and hovered_tile.piece != None and hovered_tile.piece.color == turn:
+            selected_tile = hovered_tile
+    if event.type == pygame.MOUSEBUTTONUP:
+        drop_tile = get_square_under_mouse(grid)
+        if drop_tile and selected_tile:
+            outcome = grid.move_piece(selected_tile, drop_tile)
+            if outcome == 2:
+                print(f"{turn} wins!")
+            if outcome == 1:
+                turn = 'black' if turn == 'white' else 'white'
+            print(turn)
 
 def render_pieces(grid):
     for row in grid.tiles:
@@ -97,7 +132,7 @@ def init_grid():
     grid.add_pieces(tiles)
     return grid
 
-def draw_grid():
+def render_grid():
     for x in range(0, 8):
         for y in range(0, 8):
             rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
