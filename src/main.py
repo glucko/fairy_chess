@@ -47,10 +47,10 @@ def main():
         SCREEN.blit(background, (0, 0))
         time_delta = CLOCK.tick(60)/1000.0
         hovered_tile = get_square_under_mouse(grid)
-        selected_tile = None
 
         # !!!!!!!!! EVENTS !!!!!!!!!
         for event in pygame.event.get():
+            # !!!!!!!!! GUI EVENTS !!!!!!!!!
             if event.type == pygame.QUIT:
                 app_running = False
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
@@ -58,36 +58,35 @@ def main():
                     run_game = True
                 if event.ui_element == stop_button:
                     run_game = False
+            # !!!!!!!!! GAME EVENTS !!!!!!!!!
             if run_game:
-                game_events(event, grid, hovered_tile, selected_tile, turn)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if hovered_tile != None and hovered_tile.piece != None and hovered_tile.piece.color == turn:
+                        selected_tile = hovered_tile
+                if event.type == pygame.MOUSEBUTTONUP:
+                    drop_tile = get_square_under_mouse(grid)
+                    if drop_tile and selected_tile:
+                        outcome = grid.move_piece(selected_tile, drop_tile)
+                        if outcome == 2:
+                            print(f"{turn} wins!")
+                        if outcome == 1:
+                            turn = 'black' if turn == 'white' else 'white'
+                        print(turn)
             manager.process_events(event)
 
-        if run_game: 
+        if run_game:
+            # !!!!!!!!! RENDERING !!!!!!!!!
             render_grid()
             render_pieces(grid)
 
+            # !!!!!!!!! I FORGOT WHAT THIS DOES !!!!!!!!!
             if hovered_tile != None:
                 rect = (BOARD_POS[0] + hovered_tile.x * TILE_SIZE, BOARD_POS[1] + hovered_tile.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
                 pygame.draw.rect(SCREEN, (255, 0, 0, 50), rect, 2)
-                
+
         manager.draw_ui(SCREEN)
         manager.update(time_delta)
         pygame.display.flip()
-
-def game_events(event, grid, hovered_tile, selected_tile, turn):
-    print("sussy")
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if hovered_tile != None and hovered_tile.piece != None and hovered_tile.piece.color == turn:
-            selected_tile = hovered_tile
-    if event.type == pygame.MOUSEBUTTONUP:
-        drop_tile = get_square_under_mouse(grid)
-        if drop_tile and selected_tile:
-            outcome = grid.move_piece(selected_tile, drop_tile)
-            if outcome == 2:
-                print(f"{turn} wins!")
-            if outcome == 1:
-                turn = 'black' if turn == 'white' else 'white'
-            print(turn)
 
 def render_pieces(grid):
     for row in grid.tiles:
